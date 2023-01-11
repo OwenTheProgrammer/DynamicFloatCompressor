@@ -74,9 +74,9 @@ float dfc_cvtdf_ps(const dfc_value_t value) {
 
 	//Construct real part
 	uint8_t realOffset = 23 - value.tag.real;
-	uint32_t realMask = 0xFF800000 >> value.tag.real;
-	buffer.frac = memory << realOffset;
-	buffer.frac &= realMask;
+	uint32_t realMask = dfc_bitMask(value.tag.real);
+	buffer.frac = (memory & realMask) << realOffset;
+	memory >>= value.tag.real;
 
 	//Construct run part
 	memory &= dfc_bitMask(value.tag.run * 4);
@@ -139,7 +139,7 @@ uint8_t dfc_packExponent(uint8_t exponent, int* const length) {
 uint8_t dfc_unpackExponent(uint8_t value, const uint8_t length) {
 	if(length == 0) return 127u;
 	uint8_t mask = dfc_bitMask(length);
-	uint8_t sign = value >> length;
+	uint8_t sign = (value >> length) & 1;
 	value &= mask;
 	if(sign) value = -value;
 	return 127+value;

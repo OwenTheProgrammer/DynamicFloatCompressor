@@ -110,6 +110,11 @@ DFC_API float dfc_cvtdf_ps(const dfc_value_t value);
 DFC_API int dfc_getEncodedLength(const dfc_tag_t tag);
 
 
+#if defined(__cplusplus)
+//Private namespace
+namespace impl {
+#endif
+
 //Compiler specific implementations
 //Stride 8 bit = 7, 16 bit = 15, 32 bit = 31
 inline void dfc_bitScanReverse(int* const pos, const int value, const int stride);
@@ -156,6 +161,7 @@ inline float dfc_abs_ps(const float value);
 dfc_value_t dfc_nomm_encodeFrac(const dfc_floatMem_t value, const float maxErr);
 
 #if defined(__cplusplus)
+} //private namespace
 } //extern "C"
 } //namespace
 #endif
