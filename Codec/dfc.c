@@ -105,14 +105,14 @@ int dfc_getEncodedLength(const dfc_tag_t tag) {
 }
 
 //Compiler specific implementations
-inline void dfc_bitScanReverse(int* const pos, const int value) {
+inline void dfc_bitScanReverse(int* const pos, const int value, const int stride) {
 #if defined(DFC_COMPILE_MSVC)
 	_BitScanReverse((unsigned long*)pos, value);
 #elif defined(DFC_COMPILE_GCC)
-	*pos = 31 - __builtin_clz(value);
+	*pos = stride - __builtin_clz(value);
 #else
-	int c = 1<<31;
-	*pos = 31;
+	int c = 1<<stride;
+	*pos = stride;
 	while(1) {
 		if(value & c)
 			break;

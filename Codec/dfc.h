@@ -111,7 +111,8 @@ DFC_API int dfc_getEncodedLength(const dfc_tag_t tag);
 
 
 //Compiler specific implementations
-inline void dfc_bitScanReverse(int* const pos, const int value);
+//Stride 8 bit = 7, 16 bit = 15, 32 bit = 31
+inline void dfc_bitScanReverse(int* const pos, const int value, const int stride);
 
 //Private functions
 
